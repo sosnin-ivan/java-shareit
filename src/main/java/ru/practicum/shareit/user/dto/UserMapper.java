@@ -5,15 +5,22 @@ import ru.practicum.shareit.user.model.User;
 
 @Component
 public class UserMapper {
-    public static UserDto mapToUserDto(User user) {
-        return UserDto.builder()
+    public static UserResponse mapToUserResponse(User user) {
+        return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
                 .build();
     }
 
-    public static User mapToUser(UserDto userDto) {
+    public static User mapToUser(UserCreateRequest userDto) {
+        return User.builder()
+                .email(userDto.getEmail())
+                .name(userDto.getName())
+                .build();
+    }
+
+    public static User mapToUser(UserUpdateRequest userDto) {
         return User.builder()
                 .id(userDto.getId())
                 .email(userDto.getEmail())

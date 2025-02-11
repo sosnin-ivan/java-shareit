@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.errors.ConflictException;
 import ru.practicum.shareit.errors.NotFoundException;
+import ru.practicum.shareit.user.dto.UserCreateRequest;
+import ru.practicum.shareit.user.dto.UserUpdateRequest;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.dto.UserResponse;
 import ru.practicum.shareit.user.dto.UserMapper;
 import ru.practicum.shareit.user.storage.UserStorage;
 
@@ -14,20 +16,20 @@ import ru.practicum.shareit.user.storage.UserStorage;
 public class UserServiceImpl implements UserService {
     private final UserStorage userStorage;
 
-    public UserDto createUser(UserDto userDto) {
-        validateUserFields(userDto);
+    public UserResponse createUser(UserCreateRequest userDto) {
         checkEmail(userDto.getEmail());
         User createdUser = userStorage.createUser(UserMapper.mapToUser(userDto));
-        return UserMapper.mapToUserDto(createdUser);
+        return UserMapper.mapToUserResponse(createdUser);
     }
 
-    public UserDto getUser(Long id) {
-        return UserMapper.mapToUserDto(checkUser(id));
+    public UserResponse getUser(Long id) {
+        return UserMapper.mapToUserResponse(checkUser(id));
     }
 
-    public UserDto updateUser(Long id, UserDto userDto) {
+    public UserResponse updateUser(Long id, UserUpdateRequest userDto) {
         User preparedUser = prepareUser(id, userDto);
-        return UserMapper.mapToUserDto(userStorage.updateUser(preparedUser));
+        userStorage.updateUser(preparedUser);
+        return UserMapper.mapToUserResponse(preparedUser);
     }
 
     public void deleteUser(Long id) {
@@ -35,9 +37,9 @@ public class UserServiceImpl implements UserService {
         userStorage.deleteUser(id);
     }
 
-    private User prepareUser(Long id, UserDto userDto) {
+    private User prepareUser(Long id, UserUpdateRequest userDto) {
         checkUser(id);
-        UserDto oldUser = getUser(id);
+        UserResponse oldUser = getUser(id);
         if (userDto.getEmail() == null) {
             userDto.setEmail(oldUser.getEmail());
         } else if (!oldUser.getEmail().equals(userDto.getEmail())) {
@@ -58,12 +60,6 @@ public class UserServiceImpl implements UserService {
     private void checkEmail(String email) {
         if (userStorage.getEmails().contains(email)) {
             throw new ConflictException(String.format("Пользователь с email %s уже существует", email));
-        }
-    }
-
-    private void validateUserFields(UserDto userDto) {
-        if (userDto.getEmail() == null || userDto.getName() == null) {
-            throw new IllegalArgumentException("Email и имя должны быть заполнены");
         }
     }
 }

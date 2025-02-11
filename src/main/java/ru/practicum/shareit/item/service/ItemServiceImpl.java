@@ -3,8 +3,10 @@ package ru.practicum.shareit.item.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.errors.NotFoundException;
+import ru.practicum.shareit.item.dto.ItemCreateRequest;
+import ru.practicum.shareit.item.dto.ItemUpdateRequest;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemResponse;
 import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.storage.ItemStorage;
 import ru.practicum.shareit.user.storage.UserStorage;
@@ -17,27 +19,26 @@ public class ItemServiceImpl implements ItemService {
     private final ItemStorage itemStorage;
     private final UserStorage userStorage;
 
-    public ItemDto createItem(Long userId, ItemDto itemDto) {
-        validateItemFields(itemDto);
+    public ItemResponse createItem(Long userId, ItemCreateRequest itemDto) {
         checkUser(userId);
         Item createdItem = ItemMapper.mapToItem(itemDto);
         createdItem.setOwner(userId);
-        return ItemMapper.mapToItemDto(itemStorage.createItem(createdItem));
+        return ItemMapper.mapToItemResponse(itemStorage.createItem(createdItem));
     }
 
-    public ItemDto getItem(Long id) {
-        return ItemMapper.mapToItemDto(checkItem(id));
+    public ItemResponse getItem(Long id) {
+        return ItemMapper.mapToItemResponse(checkItem(id));
     }
 
-    public ItemDto updateItem(Long userId, Long id, ItemDto itemDto) {
+    public ItemResponse updateItem(Long userId, Long id, ItemUpdateRequest itemDto) {
         Item preparedItem = prepareItem(userId, id, itemDto);
-        return ItemMapper.mapToItemDto(itemStorage.updateItem(preparedItem));
+        return ItemMapper.mapToItemResponse(itemStorage.updateItem(preparedItem));
     }
 
-    private Item prepareItem(Long userId, Long id, ItemDto itemDto) {
+    private Item prepareItem(Long userId, Long id, ItemUpdateRequest itemDto) {
         checkUser(userId);
         checkItem(id);
-        ItemDto oldItem = getItem(id);
+        ItemResponse oldItem = getItem(id);
         if (itemDto.getName() == null) {
             itemDto.setName(oldItem.getName());
         }
@@ -57,16 +58,16 @@ public class ItemServiceImpl implements ItemService {
         itemStorage.deleteItem(id);
     }
 
-    public List<ItemDto> getUserItems(Long userId) {
+    public List<ItemResponse> getUserItems(Long userId) {
         checkUser(userId);
-        return itemStorage.getUserItems(userId).stream().map(ItemMapper::mapToItemDto).toList();
+        return itemStorage.getUserItems(userId).stream().map(ItemMapper::mapToItemResponse).toList();
     }
 
-    public List<ItemDto> searchItems(String query) {
+    public List<ItemResponse> searchItems(String query) {
         if (query.isBlank()) {
             return List.of();
         }
-        return itemStorage.searchItems(query).stream().map(ItemMapper::mapToItemDto).toList();
+        return itemStorage.searchItems(query).stream().map(ItemMapper::mapToItemResponse).toList();
     }
 
     private Item checkItem(Long id) {
@@ -85,16 +86,6 @@ public class ItemServiceImpl implements ItemService {
             throw new IllegalArgumentException(
                     String.format("Предмет c id %d не принадлежит пользователю с id %d", item.getId(), userId)
             );
-        }
-    }
-
-    private void validateItemFields(ItemDto itemDto) {
-        if (
-                itemDto.getAvailable() == null ||
-                itemDto.getName() == null || itemDto.getName().isBlank() ||
-                itemDto.getDescription() == null || itemDto.getDescription().isBlank()
-        ) {
-            throw new IllegalArgumentException("Название, описание и доступность должны быть заполнены");
         }
     }
 }

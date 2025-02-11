@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.dto.UserCreateRequest;
+import ru.practicum.shareit.user.dto.UserResponse;
+import ru.practicum.shareit.user.dto.UserUpdateRequest;
 import ru.practicum.shareit.user.service.UserServiceImpl;
 
 @Slf4j
@@ -15,17 +17,17 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @PostMapping
-    public UserDto create(@Valid @RequestBody UserDto userDto) {
+    public UserResponse create(@Valid @RequestBody UserCreateRequest userDto) {
         return userService.createUser(userDto);
     }
 
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable Long id) {
+    public UserResponse getById(@PathVariable Long id) {
         return userService.getUser(id);
     }
 
     @PatchMapping("/{id}")
-    public UserDto update(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
+    public UserResponse update(@PathVariable Long id, @Valid @RequestBody UserUpdateRequest userDto) {
         return userService.updateUser(id, userDto);
     }
 
