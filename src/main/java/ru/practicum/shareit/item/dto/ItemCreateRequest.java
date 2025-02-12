@@ -1,25 +1,21 @@
-package ru.practicum.shareit.item.model;
+package ru.practicum.shareit.item.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class Item {
-    @Positive
-    private Long id;
-
+public class ItemCreateRequest {
     @NotBlank(message = "название не может быть пустым")
     private String name;
 
     @NotBlank(message = "описание не может быть пустым")
     private String description;
 
-    @NotBlank(message = "доступность не может быть пустым")
+    @NotNull(message = "доступность не может быть пустым")
     private Boolean available;
 
-    @NotBlank(message = "владелец не может отсутствовать")
     private Long owner;
 }
