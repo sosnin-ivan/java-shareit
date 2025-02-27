@@ -109,7 +109,7 @@ public class BookingService {
         };
     }
 
-    private Booking findBooking(Long id){
+    private Booking findBooking(Long id) {
         return bookingRepository.findById(id).orElseThrow(() ->
                 new NotFoundException(String.format("Бронирование c id %d не найдено", id)));
     }
