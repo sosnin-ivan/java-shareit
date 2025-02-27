@@ -11,6 +11,7 @@ import ru.practicum.shareit.user.dto.UserMapper;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
 
@@ -20,7 +21,6 @@ public class UserService {
         return UserMapper.mapToUserResponse(createdUser);
     }
 
-    @Transactional
     public UserResponse getUser(Long id) {
         return UserMapper.mapToUserResponse(findUser(id));
     }
