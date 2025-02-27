@@ -14,7 +14,7 @@ spring:
     driver-class-name: "org.postgresql.Driver"
     url: "jdbc:postgresql://localhost:5432/shareit"
     username: postgres
-    password: postgres
+    password: 12345
 logging.level.org:
   springframework:
     orm.jpa: INFO
