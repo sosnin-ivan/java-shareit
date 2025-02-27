@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 @Builder
 public class UserUpdateRequest {
+    Long id;
+
     @Email(message = "некорректный email")
     private String email;
 
