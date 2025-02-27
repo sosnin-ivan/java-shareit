@@ -77,7 +77,11 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.7.2</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<resources>
