@@ -97,7 +97,7 @@ public class ItemService {
         List<Booking> bookings = bookingRepository.findByBookerIdAndItemIdAndEndIsBeforeOrderByStartDesc(item.getOwner(), item.getId(), LocalDateTime.now());
         List<Comment> comments = commentRepository.findByItemId(item.getId());
         ItemResponse mappedItem = ItemMapper.mapToItemResponse(item, comments);
-        if (bookings != null) {
+        if (!bookings.isEmpty()) {
             mappedItem.setLastBooking(bookings.getLast());
             mappedItem.setNextBooking(bookings.get(bookings.size() - 2));
         }
