@@ -9,13 +9,13 @@ import java.util.List;
 
 @Data
 @Builder
-public class ItemResponse {
+public class ItemByUserResponse {
     private Long id;
     private String name;
     private String description;
     private Boolean available;
     private Long owner;
-    private List<Comment> comments;
     private Booking nextBooking;
     private Booking lastBooking;
+    private List<Comment> comments;
 }
