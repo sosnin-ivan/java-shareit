@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ItemUpdateRequest {
+public class ItemCreatedResponse {
     private Long id;
     private String name;
     private String description;
