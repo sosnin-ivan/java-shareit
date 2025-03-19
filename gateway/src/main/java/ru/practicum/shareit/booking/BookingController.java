@@ -25,7 +25,7 @@ public class BookingController {
 			@RequestHeader(USER_ID_HEADER) long userId,
 			@Valid @RequestBody BookingCreateRequest requestDto
 	) {
-//		log.info("BookingController.bookItem: {}, by userId={}", userId, requestDto);
+		log.info("BookingController.bookItem: {}, by userId={}", userId, requestDto);
 		return bookingClient.bookItem(userId, requestDto);
 	}
 
@@ -34,7 +34,7 @@ public class BookingController {
 			@RequestHeader(USER_ID_HEADER) long userId,
 			@PathVariable Long bookingId
 	) {
-//		log.info("BookingController.getBooking: {}, by userId={}", bookingId, userId);
+		log.info("BookingController.getBooking: {}, by userId={}", bookingId, userId);
 		return bookingClient.getBooking(userId, bookingId);
 	}
 
@@ -44,7 +44,7 @@ public class BookingController {
 			@PathVariable Long bookingId,
 			@RequestParam Boolean approved
 	) {
-//		log.info("BookingController.updateBooking: {}, by userId={}, approved={}", bookingId, userId, approved);
+		log.info("BookingController.updateBooking: {}, by userId={}, approved={}", bookingId, userId, approved);
 		return bookingClient.updateBookingStatus(bookingId, userId, approved);
 	}
 
@@ -53,7 +53,7 @@ public class BookingController {
 			@RequestHeader(USER_ID_HEADER) Long userId,
 			@RequestParam(defaultValue = "ALL") BookingState status
 	) {
-//		log.info("BookingController.getBookingsByBooker: {}, by userId={}", status, userId);
+		log.info("BookingController.getBookingsByBooker: {}, by userId={}", status, userId);
 		return bookingClient.getBookingsByBooker(userId, status);
 	}
 
@@ -62,7 +62,7 @@ public class BookingController {
 			@RequestHeader(USER_ID_HEADER) Long userId,
 			@RequestParam(defaultValue = "ALL") BookingState status
 	) {
-//		log.info("BookingController.getBookingsByItemsOwner: {}, by userId={}", status, userId);
+		log.info("BookingController.getBookingsByItemsOwner: {}, by userId={}", status, userId);
 		return bookingClient.getBookingsByItemsOwner(userId, status);
 	}
 }
