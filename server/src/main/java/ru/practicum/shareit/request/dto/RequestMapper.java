@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class RequestMapper {
     public static RequestResponse mapToItemRequestResponse(Request itemRequest) {
         if (itemRequest == null) {
-            throw new IllegalArgumentException("ItemRequest is null");
+            return null;
         }
         return RequestResponse.builder()
                 .id(itemRequest.getId())
@@ -22,7 +22,7 @@ public class RequestMapper {
 
     public static Request mapToItemRequest(RequestCreate requestDto, User requester) {
         if (requestDto == null) {
-            throw new IllegalArgumentException("ItemRequestCreateRequest is null");
+            return null;
         }
         return Request.builder()
                 .description(requestDto.getDescription())

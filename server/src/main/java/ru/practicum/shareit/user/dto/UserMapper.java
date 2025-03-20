@@ -7,7 +7,7 @@ import ru.practicum.shareit.user.User;
 public class UserMapper {
     public static UserResponse mapToUserResponse(User user) {
         if (user == null) {
-            throw new IllegalArgumentException("User is null");
+            return null;
         }
         return UserResponse.builder()
                 .id(user.getId())
@@ -18,7 +18,7 @@ public class UserMapper {
 
     public static User mapToUser(UserCreateRequest userDto) {
         if (userDto == null) {
-            throw new IllegalArgumentException("UserCreateRequest is null");
+            return null;
         }
         return User.builder()
                 .email(userDto.getEmail())
@@ -28,7 +28,7 @@ public class UserMapper {
 
     public static User mapToUser(UserUpdateRequest userDto) {
         if (userDto == null) {
-            throw new IllegalArgumentException("UserCreateRequest is null");
+            return null;
         }
         return User.builder()
                 .id(userDto.getId())

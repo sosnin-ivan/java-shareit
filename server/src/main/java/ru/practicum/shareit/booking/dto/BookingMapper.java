@@ -12,7 +12,7 @@ import java.util.List;
 public class BookingMapper {
     public static BookingResponse mapToBookingResponse(Booking booking) {
         if (booking == null) {
-            throw new IllegalArgumentException("Booking is null");
+            return null;
         }
         return BookingResponse.builder()
                 .id(booking.getId())
@@ -26,7 +26,7 @@ public class BookingMapper {
 
     public static List<BookingResponse> mapToBookingResponse(Iterable<Booking> bookings) {
         if (bookings == null) {
-            throw new IllegalArgumentException("Booking is null");
+            return null;
         }
         List<BookingResponse> mappedBookings = new ArrayList<>();
         for (Booking booking : bookings) {
@@ -37,7 +37,7 @@ public class BookingMapper {
 
     public static Booking mapToBooking(BookingCreateRequest bookingDto, Item item, User booker) {
         if (bookingDto == null || item == null || booker == null) {
-            throw new IllegalArgumentException("One of parameters is null");
+            return null;
         }
         return Booking.builder()
                 .start(bookingDto.getStart())

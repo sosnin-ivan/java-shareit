@@ -10,7 +10,7 @@ import java.util.List;
 public class ItemMapper {
     public static ItemCreatedResponse mapToItemCreatedResponse(Item item) {
         if (item == null) {
-            throw new IllegalArgumentException("Item is null");
+            return null;
         }
         return ItemCreatedResponse.builder()
                 .id(item.getId())
@@ -23,7 +23,7 @@ public class ItemMapper {
 
     public static ItemResponse mapToItemResponse(Item item, List<Comment> comments) {
         if (item == null) {
-            throw new IllegalArgumentException("Item is null");
+            return null;
         }
         return ItemResponse.builder()
                 .id(item.getId())
@@ -38,7 +38,7 @@ public class ItemMapper {
 
     public static ItemResponse mapToItemResponseForRequest(Item item) {
         if (item == null) {
-            throw new IllegalArgumentException("Item is null");
+            return null;
         }
         return ItemResponse.builder()
                 .id(item.getId())
@@ -52,7 +52,7 @@ public class ItemMapper {
 
     public static Item mapToItem(ItemCreateRequest itemDto) {
         if (itemDto == null) {
-            throw new IllegalArgumentException("ItemCreateRequest is null");
+            return null;
         }
         return Item.builder()
                 .name(itemDto.getName())
@@ -64,7 +64,7 @@ public class ItemMapper {
 
     public static Item mapToItem(ItemUpdateRequest itemDto) {
         if (itemDto == null) {
-            throw new IllegalArgumentException("ItemUpdateRequest is null");
+            return null;
         }
         return Item.builder()
                 .id(itemDto.getId())

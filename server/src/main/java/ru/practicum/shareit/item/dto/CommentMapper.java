@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class CommentMapper {
     public static CommentResponse mapToCommentResponse(Comment comment) {
         if (comment == null) {
-            throw new IllegalArgumentException("Comment is null");
+            return null;
         }
         return CommentResponse.builder()
                 .id(comment.getId())
@@ -23,7 +23,7 @@ public class CommentMapper {
 
     public static Comment mapToComment(CommentCreateRequest commentDto, User user, Item item) {
         if (commentDto == null || user == null || item == null) {
-            throw new IllegalArgumentException("One of parameters is null");
+            return null;
         }
         return Comment.builder()
                 .text(commentDto.getText())

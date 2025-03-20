@@ -1,6 +1,8 @@
 package ru.practicum.shareit.request;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.errors.NotFoundException;
@@ -18,10 +20,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RequestService {
-    private final RequestRepository requestRepository;
-    private final ItemRepository itemRepository;
-    private final UserRepository userRepository;
+    RequestRepository requestRepository;
+    ItemRepository itemRepository;
+    UserRepository userRepository;
 
     @Transactional
     public RequestResponse createRequest(RequestCreate itemRequestDto, Long userId) {
